@@ -800,7 +800,8 @@ openerp.web_graph.Graph = openerp.web.Widget.extend({
 
         nv.addGraph(function () {
             var chart = nv.models.lineChart()
-                .x(function (d,u) { return u; });
+                .x(function (d,u) { return u; })
+                .color(d3.scale.category10().range());
 
             chart.xAxis.tickFormat(function (d,u) {return labels[d];});
 
