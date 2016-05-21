@@ -491,7 +491,18 @@ class ir_mail_server(osv.osv):
             smtp = None
             try:
                 smtp = self.connect(smtp_server, smtp_port, smtp_user, smtp_password, smtp_encryption or False, smtp_debug)
-                smtp.sendmail(smtp_from, smtp_to_list, message.as_string())
+                #smtp.sendmail(smtp_from, smtp_to_list, message.as_string())
+                #FIX 2016-05-21 : Because of Zoho mail does not allow relay mail
+                #That means the mail must sent from smtp_user
+                #so we replace smtp_from => smtp_user
+                #Also need to replace message['From'] to smtp_user
+                #Here we only replace email address part but keep email name
+                #example: AIO Robotics Inc. <old@email.com> to AIO Robotics Inc. <smtp_user email>
+                from email.utils import parseaddr,formataddr
+                (oldname,oldemail) = parseaddr(message['From']) #exact name and address
+                newfrom = formataddr((oldname,smtp_user)) #use original name with new address
+                message.replace_header('From', newfrom) #need to use replace_header instead '=' to prevent double field
+                smtp.sendmail(smtp_user, smtp_to_list, message.as_string())
             finally:
                 if smtp is not None:
                     smtp.quit()
