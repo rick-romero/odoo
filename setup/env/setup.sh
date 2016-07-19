@@ -94,7 +94,7 @@ case $OPT in
 	sudo python /tmp/geraldo/setup.py install
 	sudo git clone https://github.com/rick-romero/PySPED --branch 8.0 --depth 1 /tmp/PySPED
 	sudo python /tmp/PySPED/setup.py install
-	sudo git clone https://github.com/rick-romero/pyxmlsec --branch master --depth 1 /tmp
+	sudo git clone https://github.com/rick-romero/pyxmlsec --branch master --depth 1 /tmp/pyxmlsec
 	sudo python /tmp/pyxmlsec/setup.py install
 	#sudo pip install pyxmlsec-0.3.0.tar.gz
 	#sudo git clone https://github.com/aricaldeira/pyxmlsec --branch master /tmp
